@@ -18,7 +18,6 @@ export default function TopNav() {
     role,
     tab,
     setTab,
-    switchRole,
     logout,
     notices,
     openModal,
@@ -87,19 +86,6 @@ export default function TopNav() {
 
         {/* Right actions */}
         <div className="ml-auto flex items-center gap-1.5 lg:ml-0">
-          {/* Switch role */}
-          <button
-            onClick={switchRole}
-            className="hidden items-center gap-2 rounded-full bg-secondary-container/50 px-4 py-2 text-sm font-bold text-on-secondary-container transition hover:bg-secondary-container sm:inline-flex"
-            title="Toggle between Student and Warden view"
-          >
-            <Icon name="swap_horiz" size={17} weight={700} />
-            Switch Role
-            <span className="rounded-full bg-on-secondary-container px-1.5 py-0.5 text-[10px] font-bold uppercase text-secondary-container">
-              {role}
-            </span>
-          </button>
-
           {/* System status */}
           <button
             onClick={() => openModal('systemStatus')}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { DEMO_USERS, STUDENT_ACCOUNT, WARDEN_ACCOUNT } from '../data/seed';
+import { DEMO_USERS } from '../data/seed';
 import Icon from './Icon';
 
 type Mode = 'login' | 'register';
@@ -22,21 +22,6 @@ export default function AuthModal() {
   const [block, setBlock] = useState(BLOCKS[0]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  const doLogin = (asWarden: boolean, displayName?: string) => {
-    const demo = DEMO_USERS.find((u) => u.role === (asWarden ? 'warden' : 'student'))!;
-    login(demo);
-    showSuccess('Welcome back!', `Signed in as ${displayName ?? demo.name} (${asWarden ? 'Warden / Admin' : 'Student'}).`);
-  };
-
-  const handleDemo = (asWarden: boolean) => {
-    const mail = asWarden ? WARDEN_ACCOUNT.email : STUDENT_ACCOUNT.email;
-    const pass = asWarden ? WARDEN_ACCOUNT.password : STUDENT_ACCOUNT.password;
-    setMode('login');
-    setEmail(mail);
-    setPassword(pass);
-    doLogin(asWarden);
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,32 +82,6 @@ export default function AuthModal() {
               </button>
             ))}
           </div>
-        </div>
-
-        {/* Quick demo access */}
-        <div className="mb-6 grid grid-cols-2 gap-3">
-          <button
-            onClick={() => handleDemo(false)}
-            className="group rounded-md3 border border-outline-strong/40 bg-surface-lowest p-4 text-left transition hover:border-primary hover:shadow-md3"
-          >
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-container/20 text-on-primary-container">
-              <Icon name="school" size={18} />
-            </span>
-            <p className="mt-2 font-display text-sm font-bold text-ink">Student</p>
-            <p className="mt-0.5 text-[11px] text-ink-soft">Block A · North Campus</p>
-            <p className="mt-1 text-[11px] font-semibold text-primary group-hover:underline">One-tap demo →</p>
-          </button>
-          <button
-            onClick={() => handleDemo(true)}
-            className="group rounded-md3 border border-outline-strong/40 bg-surface-lowest p-4 text-left transition hover:border-secondary hover:shadow-md3"
-          >
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-secondary-container/40 text-on-secondary-container">
-              <Icon name="shield_person" size={18} />
-            </span>
-            <p className="mt-2 font-display text-sm font-bold text-ink">Warden / Admin</p>
-            <p className="mt-0.5 text-[11px] text-ink-soft">Block B · South Campus</p>
-            <p className="mt-1 text-[11px] font-semibold text-secondary group-hover:underline">One-tap demo →</p>
-          </button>
         </div>
 
         <div className="mb-5 flex items-center gap-3">
