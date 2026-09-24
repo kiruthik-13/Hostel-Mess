@@ -84,12 +84,6 @@ export default function AuthModal() {
           </div>
         </div>
 
-        <div className="mb-5 flex items-center gap-3">
-          <span className="h-px flex-1 bg-outline/70" />
-          <span className="text-xs font-semibold uppercase tracking-wide text-ink-soft">or continue manually</span>
-          <span className="h-px flex-1 bg-outline/70" />
-        </div>
-
         <form onSubmit={handleSubmit} className="space-y-4">
           {mode === 'register' && (
             <div>

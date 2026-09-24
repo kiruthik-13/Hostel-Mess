@@ -22,7 +22,7 @@ export default function TopNav() {
     notices,
     openModal,
     theme,
-    toggleTheme,
+    setTheme,
   } = useApp();
 
   const [avatarOpen, setAvatarOpen] = useState(false);
@@ -98,25 +98,33 @@ export default function TopNav() {
             System Status
           </button>
 
-          {/* Theme toggle */}
-          <button
-            onClick={toggleTheme}
-            className="flex items-center justify-center rounded-full p-2.5 text-ink-soft transition hover:bg-surface-default hover:text-ink"
-            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-          >
-            <Icon name={theme === 'dark' ? 'light_mode' : 'dark_mode'} size={20} />
-          </button>
-
-          {/* Theme toggle */}
-          <button
-            onClick={toggleTheme}
-            className="flex h-10 w-10 items-center justify-center rounded-full p-2.5 text-ink-soft transition hover:bg-surface-default hover:text-ink"
-            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-          >
-            <Icon name={theme === 'dark' ? 'light_mode' : 'dark_mode'} size={20} />
-          </button>
+          {/* Theme switch — light / dark */}
+          <div className="flex items-center gap-0.5 rounded-full bg-surface-default p-1">
+            <button
+              onClick={() => setTheme('light')}
+              className={`flex h-9 w-9 items-center justify-center rounded-full transition ${
+                theme === 'light'
+                  ? 'bg-primary text-on-primary shadow-md3'
+                  : 'text-ink-soft hover:text-ink'
+              }`}
+              aria-label="Switch to light mode"
+              title="Light mode"
+            >
+              <Icon name="light_mode" size={18} />
+            </button>
+            <button
+              onClick={() => setTheme('dark')}
+              className={`flex h-9 w-9 items-center justify-center rounded-full transition ${
+                theme === 'dark'
+                  ? 'bg-primary text-on-primary shadow-md3'
+                  : 'text-ink-soft hover:text-ink'
+              }`}
+              aria-label="Switch to dark mode"
+              title="Dark mode"
+            >
+              <Icon name="dark_mode" size={18} />
+            </button>
+          </div>
 
           {/* Notifications */}
           <button
