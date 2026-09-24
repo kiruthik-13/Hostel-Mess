@@ -2,6 +2,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -60,6 +61,11 @@ interface AppContextValue {
   tab: TabKey;
   setTab: (t: TabKey) => void;
 
+  /* theme */
+  theme: 'light' | 'dark';
+  setTheme: (t: 'light' | 'dark') => void;
+  toggleTheme: () => void;
+
   /* modal system */
   modal: ModalKey;
   feedbackTarget: FeedbackModalTarget | null;
@@ -108,6 +114,26 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [detailReview, setDetailReview] = useState<FeedbackReview | null>(null);
   const [success, setSuccess] = useState<{ title: string; message: string } | null>(null);
   const successTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  /* ---------------------------------------------------------------- */
+  /* Theme — persisted to localStorage, drives `.dark` on <html>.      */
+  /* `campusbite-theme` in the storage key (brand-consistent).         */
+  /* The initial value comes from localStorage → OS prefers → light.    */
+  /* ---------------------------------------------------------------- */
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const stored = localStorage.getItem('campusbite-theme');
+    if (stored === 'light' || stored === 'dark') return stored;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    localStorage.setItem('campusbite-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = useCallback(() => {
+    setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
+  }, []);
 
   const [timeframe, setTimeframe] = useState<TimeframeKey>('7d');
   const [tableSearch, setTableSearch] = useState('');
@@ -271,6 +297,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       notices,
       tab,
       setTab,
+      theme,
+      setTheme,
+      toggleTheme,
       modal,
       feedbackTarget,
       detailReview,
@@ -304,6 +333,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       openModal, openFeedbackModal, openDetailModal, closeModal,
       success, showSuccess, addReview, setReviewResolution,
       updateMeal, replaceMealDishes, markAllNoticesRead,
+      theme, setTheme, toggleTheme,
       timeframe, tableSearch, slotFilter, ratingFilter, activeTag, page,
     ],
   );

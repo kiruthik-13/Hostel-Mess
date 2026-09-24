@@ -22,6 +22,8 @@ export default function TopNav() {
     logout,
     notices,
     openModal,
+    theme,
+    toggleTheme,
   } = useApp();
 
   const [avatarOpen, setAvatarOpen] = useState(false);
@@ -108,6 +110,26 @@ export default function TopNav() {
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-secondary" />
             </span>
             System Status
+          </button>
+
+          {/* Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            className="flex items-center justify-center rounded-full p-2.5 text-ink-soft transition hover:bg-surface-default hover:text-ink"
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            <Icon name={theme === 'dark' ? 'light_mode' : 'dark_mode'} size={20} />
+          </button>
+
+          {/* Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            className="flex h-10 w-10 items-center justify-center rounded-full p-2.5 text-ink-soft transition hover:bg-surface-default hover:text-ink"
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            <Icon name={theme === 'dark' ? 'light_mode' : 'dark_mode'} size={20} />
           </button>
 
           {/* Notifications */}
